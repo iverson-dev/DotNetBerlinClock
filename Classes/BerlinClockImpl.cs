@@ -14,15 +14,23 @@ namespace BerlinClock.Classes
 
         public BerlinClockImpl(string aTime)
         {
-            DateTime time;
-            if (DateTime.TryParse(aTime, out time))
+            if(aTime.Equals("24:00:00"))
             {
-                Hour = time.Hour;
-                Minute = time.Minute;
-                Second = time.Second;
+                Hour = 24;
+                Minute = Second = 0;
             }
             else
-                throw new ArgumentException("Invalid time format. Expected 00:00:00");            
+            {
+                DateTime time;
+                if (DateTime.TryParse(aTime, out time))
+                {
+                    Hour = time.Hour;
+                    Minute = time.Minute;
+                    Second = time.Second;
+                }
+                else
+                    throw new ArgumentException("Invalid time format. Expected 00:00:00");
+            }
         }
 
         public string FirstRow()
@@ -86,10 +94,10 @@ namespace BerlinClock.Classes
         public override string ToString()
         {
             StringBuilder Lamps = new StringBuilder();
-            Lamps.Append(FirstRow() + "\r\n");
-            Lamps.Append(SecondRow() + "\r\n");
-            Lamps.Append(ThirdRow() + "\r\n");
-            Lamps.Append(FourthRow() + "\r\n");
+            Lamps.AppendLine(FirstRow());
+            Lamps.AppendLine(SecondRow());
+            Lamps.AppendLine(ThirdRow());
+            Lamps.AppendLine(FourthRow());
             Lamps.Append(FifthRow());
 
             return Lamps.ToString();

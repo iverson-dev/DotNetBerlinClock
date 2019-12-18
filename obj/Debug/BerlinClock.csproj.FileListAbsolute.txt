@@ -6,4 +6,3 @@ E:\Users\Iverson\Documentos\Projetos\EPAM\bin\Debug\TechTalk.SpecFlow.dll
 E:\Users\Iverson\Documentos\Projetos\EPAM\obj\Debug\BerlinClock.csproj.CopyComplete
 E:\Users\Iverson\Documentos\Projetos\EPAM\obj\Debug\BerlinClock.dll
 E:\Users\Iverson\Documentos\Projetos\EPAM\obj\Debug\BerlinClock.pdb
-E:\Users\Iverson\Documentos\Projetos\EPAM\obj\Debug\BerlinClock.csprojAssemblyReference.cache

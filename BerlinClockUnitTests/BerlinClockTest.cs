@@ -128,5 +128,16 @@ namespace BerlinClock.UnitTests
 
             Assert.ThrowsException<ArgumentException>(() => clock = new BerlinClockImpl(aTime));
         }
+
+        [TestMethod]
+        public void TestMidnight2400()
+        {
+            //Test if special case works (24:00:00). In this case, the second row must be RRRR and not OOOO
+            string aTime = "24:00:00";
+
+            BerlinClockImpl clock = new BerlinClockImpl(aTime); ;
+
+            Assert.AreEqual("RRRR", clock.SecondRow());
+        }
     }
 }
