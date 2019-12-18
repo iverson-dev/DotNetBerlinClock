@@ -1,39 +1,98 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BerlinClock.Classes
 {
-    public class BerlinClockImpl
+    public class BerlinClockImpl : ITimeFormat
     {
+        public int Hour { get; private set; }
+        public int Minute { get; private set; }
+        public int Second { get; private set; }
 
         public BerlinClockImpl(string aTime)
         {
-
+            DateTime time;
+            if (DateTime.TryParse(aTime, out time))
+            {
+                Hour = time.Hour;
+                Minute = time.Minute;
+                Second = time.Second;
+            }
+            else
+                throw new ArgumentException("Invalid time format. Expected 00:00:00");            
         }
 
         public string FirstRow()
         {
-            throw new NotImplementedException();
+            //Seconds (Yellow lamp)
+            return Second % 2 == 0 ? "Y" : "O";
         }
 
         public string SecondRow()
         {
-            throw new NotImplementedException();
+            //Hours - Red lamps switched on
+            string secondRow = string.Empty.PadLeft((Hour / 5), 'R'); ;
+
+            //Hours - Red lamps switched off
+            secondRow = secondRow.PadRight(4, 'O');
+
+            return secondRow;
         }
 
         public string ThirdRow()
         {
-            throw new NotImplementedException();
+            //Hours - red lamps switched on
+            string thirdRow = string.Empty.PadLeft((Hour % 5), 'R');
+
+            //Hours - red lamps switched off
+            thirdRow = thirdRow.PadRight(4, 'O');
+
+            return thirdRow;
         }
 
         public string FourthRow()
         {
-            throw new NotImplementedException();
+            //Minutes - lamps switched on (all yellow)
+            string fourthRow = string.Empty.PadLeft((Minute / 5), 'Y');
+
+            //Changing yellow lamps to red lamps
+            char[] temp = fourthRow.ToCharArray();
+            for (var i = 2; i < fourthRow.Length; i += 3)
+            {
+                temp[i] = 'R';
+            }
+            fourthRow = new string(temp);
+
+            //Minutes - lamps switched off
+            fourthRow = fourthRow.PadRight(11, 'O');
+
+            return fourthRow;
         }
 
         public string FifthRow()
         {
-            throw new NotImplementedException();
+            //Minutes - yellow lamps switched on
+            string fifthRow = string.Empty.PadLeft((Minute % 5), 'Y');
+
+            //Minutes - yellow lamps switched off
+            fifthRow = fifthRow.PadRight(4, 'O');
+
+            return fifthRow;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder Lamps = new StringBuilder();
+            Lamps.Append(FirstRow() + "\r\n");
+            Lamps.Append(SecondRow() + "\r\n");
+            Lamps.Append(ThirdRow() + "\r\n");
+            Lamps.Append(FourthRow() + "\r\n");
+            Lamps.Append(FifthRow());
+
+            return Lamps.ToString();
         }
     }
 }

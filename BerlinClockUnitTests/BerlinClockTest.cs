@@ -117,5 +117,16 @@ namespace BerlinClock.UnitTests
 
             Assert.AreEqual("OOOO", clock.FifthRow());
         }
+
+        [TestMethod]
+        public void TestInvalidTimeFormat()
+        {
+            //Test if invalid format throws a ArgumentException
+            string aTime = "24:05:00";
+
+            BerlinClockImpl clock;
+
+            Assert.ThrowsException<ArgumentException>(() => clock = new BerlinClockImpl(aTime));
+        }
     }
 }
